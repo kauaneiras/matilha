@@ -1,0 +1,9 @@
+# Scripts precisam de LF (Unix) para rodar no Docker/Linux, mesmo em clones no Windows.
+*.sh      text eol=lf
+gradlew   text eol=lf
+*.py      text eol=lf
+Dockerfile text eol=lf
+*.bat     text eol=crlf
+*.jar     binary
+*.apk     binary
+*.png     binary

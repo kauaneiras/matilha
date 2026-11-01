@@ -112,7 +112,51 @@ app/src/main/java/com/matilha/app/
 - Compatibilidade com API 26: `gradle :app:compileKotlin -PcompileApi=26` lista todo uso de API mais nova;
   cada um está protegido por `Build.VERSION.SDK_INT` ou é uma constante/setter antigo.
 
-## Como compilar e testar
+## Rodar localmente com Docker (Windows, macOS ou Linux)
+Só é preciso o [Docker Desktop](https://www.docker.com/products/docker-desktop/). No PowerShell:
+
+```powershell
+cd C:\Users\kauan\OneDrive\Documentos\matilha
+git pull
+docker compose up --build
+```
+
+- Na primeira vez demora alguns minutos, porque o Docker baixa o Gradle e as dependências. Nas próximas vezes usa o cache.
+- Quando aparecer **"APK pronto"**:
+  - abra http://localhost:8080/matilha.apk para baixar o APK;
+  - ou abra `http://<IP-do-seu-PC>:8080/matilha.apk` no celular, na mesma rede Wi-Fi. O IP aparece no `ipconfig`.
+  - O APK também é copiado para a pasta `dist\`.
+- No celular, permita "instalar apps de fontes desconhecidas" para o navegador.
+- Para parar: `Ctrl+C`.
+
+Outros comandos:
+
+```powershell
+docker compose run --rm app apk     # só gera o APK em dist\
+docker compose run --rm test        # roda os 72 testes; capturas em screens\ (1ª vez baixa ~250 MB)
+docker compose run --rm app shell   # terminal dentro do container
+```
+
+### Chaves (assinatura do APK)
+O arquivo `.env` traz **chaves genéricas de desenvolvimento**:
+- senha `matilha-dev-store`, alias `matilha`;
+- a keystore é criada sozinha na 1ª execução, no volume Docker `matilha_keys`, e nunca vai para o Git.
+
+Para produção, troque o que está no `.env`:
+1. Gere uma keystore própria e guarde-a fora do repositório.
+2. Use senhas fortes.
+3. Aponte `MATILHA_KEYSTORE` para o arquivo dessa keystore.
+
+Se a assinatura mudar, desinstale o app do celular antes de instalar o novo APK.
+
+### Rede corporativa com proxy TLS
+Se o build falhar com `PKIX path building failed`, passe o certificado da sua rede:
+
+```powershell
+docker build --secret id=extra_ca,src=C:\caminho\certificado.crt -t matilha-build .
+```
+
+## Como compilar e testar (sem Docker)
 O build não usa o Android Gradle Plugin, porque o ambiente original não acessava o Google Maven.
 O script `build-apk.sh` monta o APK com `aapt`, `dx`, `zipalign` e `apksigner` (pacotes do Ubuntu):
 
