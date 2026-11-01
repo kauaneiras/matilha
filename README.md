@@ -126,7 +126,7 @@ docker compose up --build
   - abra http://localhost:8080/matilha.apk para baixar o APK;
   - ou abra `http://<IP-do-seu-PC>:8080/matilha.apk` no celular, na mesma rede Wi-Fi. O IP aparece no `ipconfig`.
   - O APK também é copiado para a pasta `dist\` (fora do Git: é gerado a cada build).
-- Sem Docker? Baixe o APK pronto na página **Releases** do repositório no GitHub.
+- Sem Docker? Use o APK pronto em [`releases/matilha-1.0.0-mvp.apk`](releases/matilha-1.0.0-mvp.apk), assinado com a chave genérica de desenvolvimento.
 - No celular, permita "instalar apps de fontes desconhecidas" para o navegador.
 - Para parar: `Ctrl+C`.
 
