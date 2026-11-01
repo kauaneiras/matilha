@@ -112,10 +112,17 @@ class PlatformTest {
     @Test fun pulseDeliversSystemNotifications() {
         val parcao = repo.state.place("pl-parcao")!!
         repo.onLocation(parcao.lat, parcao.lon)
-        repo.update { s -> s.copy(checkIns = s.checkIns + CheckIn("bf", "sim-ana", listOf("pet-paco"), parcao.id, repo.now())) }
+        // Tutor real (não simulado): o simulador da comunidade não mexe no check-in dele,
+        // então o teste não depende da hora do dia.
+        repo.update { s -> s.copy(
+            users = s.users + User("u-real", "Rafa", "Asa Sul"),
+            pets = s.pets + Pet("pet-toddy", "u-real", "Toddy", "SRD", AgeGroup.ADULT, 12.0, Sex.MALE, true),
+            friendships = s.friendships + Friendship("fr-real", "me", "u-real", true, repo.now(), bestFriend = true),
+            checkIns = s.checkIns + CheckIn("bf", "u-real", listOf("pet-toddy"), parcao.id, repo.now()),
+        ) }
         PulseHandler.deliver(app, repo.pulse())
         val titles = shadowOf(app.getSystemService(NotificationManager::class.java)).allNotifications.map { it.extras.getString("android.title") }
-        assertTrue(titles.toString(), titles.any { it == "Paco chegou!" })
+        assertTrue(titles.toString(), titles.any { it == "Toddy chegou!" })
         assertNotNull(InstrumentationRegistry.getInstrumentation())
     }
 }
