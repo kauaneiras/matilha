@@ -26,7 +26,7 @@ case "$cmd" in
     ./fetch-robolectric.sh
     ./fetch-robolectric.sh 8.0.0_r4-robolectric-r1-i7
     ./gradlew :app:test --console=plain ${GRADLE_ARGS:-}
-    if [ -d /screens ]; then cp -r screens/. /screens/ && echo "Capturas copiadas para ./screens"; fi ;;
+    if [ -d /screens ]; then cp -r screens/. /screens/ && echo "Capturas copiadas para ./test-output"; fi ;;
   shell)
     exec bash ;;
   *)

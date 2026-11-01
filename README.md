@@ -125,7 +125,8 @@ docker compose up --build
 - Quando aparecer **"APK pronto"**:
   - abra http://localhost:8080/matilha.apk para baixar o APK;
   - ou abra `http://<IP-do-seu-PC>:8080/matilha.apk` no celular, na mesma rede Wi-Fi. O IP aparece no `ipconfig`.
-  - O APK também é copiado para a pasta `dist\`.
+  - O APK também é copiado para a pasta `dist\` (fora do Git: é gerado a cada build).
+- Sem Docker? Baixe o APK pronto na página **Releases** do repositório no GitHub.
 - No celular, permita "instalar apps de fontes desconhecidas" para o navegador.
 - Para parar: `Ctrl+C`.
 
@@ -133,7 +134,7 @@ Outros comandos:
 
 ```powershell
 docker compose run --rm app apk     # só gera o APK em dist\
-docker compose run --rm test        # roda os 72 testes; capturas em screens\ (1ª vez baixa ~250 MB)
+docker compose run --rm test        # roda os 72 testes; capturas em test-output\ (1ª vez baixa ~250 MB)
 docker compose run --rm app shell   # terminal dentro do container
 ```
 

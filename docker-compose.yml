@@ -22,7 +22,7 @@ services:
     volumes:
       - gradle:/gradle
       - robolectric:/app/app/build/robolectric-deps   # runtimes Android dos testes (~250 MB, baixa 1 vez)
-      - ./screens:/screens
+      - ./test-output:/screens     # capturas de tela geradas pelos testes
 
 volumes:
   gradle:
